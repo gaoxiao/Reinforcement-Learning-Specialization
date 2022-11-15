@@ -62,18 +62,3 @@ These course materials belong entirely to `University of Alberta` & `Alberta Mac
 + https://github.com/ShangtongZhang/reinforcement-learning-an-introduction
 + https://github.com/LyWangPX/Reinforcement-Learning-2nd-Edition-by-Sutton-Exercise-Solutions
 + David Silver Reinforcement Learning course - [slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html), [YouTube-playlist](https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ)
-
-
-<kbd><img src="https://github.com/ChanchalKumarMaji/Reinforcement-Learning-Specialization/blob/master/Certificate/Certificate.jpg" /></kbd>
-
-
-<kbd><img src="https://github.com/ChanchalKumarMaji/Reinforcement-Learning-Specialization/blob/master/Fundamentals%20of%20Reinforcement%20Learning/Certificate/Certificate.jpg" /></kbd>
-
-
-<kbd><img src="https://github.com/ChanchalKumarMaji/Reinforcement-Learning-Specialization/blob/master/Sample-based%20Learning%20Methods/Certificate/Certificate.jpg" /></kbd>
-
-
-<kbd><img src="https://github.com/ChanchalKumarMaji/Reinforcement-Learning-Specialization/blob/master/Prediction%20and%20Control%20with%20Function%20Approximation/Certificate/Certificate.jpg" /></kbd>
-
-
-<kbd><img src="https://github.com/ChanchalKumarMaji/Reinforcement-Learning-Specialization/blob/master/A%20Complete%20Reinforcement%20Learning%20System%20(Capstone)/Certificate/Certificate.jpg" /></kbd>
