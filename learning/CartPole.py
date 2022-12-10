@@ -84,6 +84,31 @@ memory = ReplayMemory(10000)
 
 steps_done = 0
 
+def softmax(action_values, num_actions, tau=1.0):
+    """
+    Args:
+        action_values (Numpy array): A 2D array of shape (batch_size, num_actions). 
+                       The action-values computed by an action-value network.              
+        tau (float): The temperature parameter scalar.
+    Returns:
+        A 2D array of shape (batch_size, num_actions). Where each column is a probability distribution over
+        the actions representing the policy.
+    """
+    preferences = action_values / tau
+    max_preference = np.max(preferences, axis=1)
+    reshaped_max_preference = max_preference.reshape((-1, 1))
+    
+    exp_preferences = np.exp(preferences - reshaped_max_preference)
+    sum_of_exp_preferences = np.sum(exp_preferences, axis=1)
+    reshaped_sum_of_exp_preferences = sum_of_exp_preferences.reshape((-1, 1))
+    
+    action_probs = exp_preferences / reshaped_sum_of_exp_preferences
+    action_probs = action_probs.squeeze()
+
+    # return action_probs
+    action = np.random.choice(num_actions, p=action_probs)
+    return action
+
 def select_action(state):
     global steps_done
     sample = random.random()
@@ -98,6 +123,15 @@ def select_action(state):
             return policy_net(state).max(1)[1].view(1, 1)
     else:
         return torch.tensor([[env.action_space.sample()]], device=device, dtype=torch.long)
+
+    # # softmax 效果很差
+    # with torch.no_grad():
+    #     action_values = policy_net(state)
+    #     # probs_batch = F.softmax(action_values, )
+    #     # action = torch.multinomial(probs_batch, 1)
+    #     action = softmax(action_values.numpy(), n_actions)
+    #     # print(f'------action: {action}')
+    #     return torch.tensor([[action]], device=device, dtype=torch.long)
 
 
 episode_durations = []
@@ -178,7 +212,7 @@ signal.signal(signal.SIGINT, exit_gracefully)
 if torch.cuda.is_available():
     num_episodes = 600
 else:
-    num_episodes = 500
+    num_episodes = 10000
 
 for i_episode in range(num_episodes):
     # Initialize the environment and get it's state
