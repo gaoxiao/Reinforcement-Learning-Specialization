@@ -1,3 +1,5 @@
+import signal
+import sys
 import gym
 import math
 import random
@@ -64,7 +66,9 @@ EPS_DECAY = 1000
 TAU = 0.005
 LR = 1e-4
 
-env = gym.make("CartPole-v1", render_mode="human")
+# env = gym.make("CartPole-v1", render_mode="human")
+env = gym.make("CartPole-v1")
+# env = gym.make("CartPole-v1", render_mode="rgb_array")
 
 # Get number of actions from gym action space
 n_actions = env.action_space.n
@@ -145,6 +149,32 @@ def optimize_model():
     optimizer.step()
 
 
+
+################################################################################################
+# Run the model without training.
+################################################################################################
+def exit_gracefully(signum, frame):
+    env = gym.make("CartPole-v1", render_mode="human")
+    state, _ = env.reset()
+    state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+    for t in count():
+        action = select_action(state)
+        observation, reward, terminated, truncated, _ = env.step(action.item())
+        done = terminated or truncated
+
+        if terminated:
+            next_state = None
+        else:
+            next_state = torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
+        state = next_state
+
+        if done:
+            print(f'Finished: {t}')
+            break
+    sys.exit(1)
+
+signal.signal(signal.SIGINT, exit_gracefully)
+
 if torch.cuda.is_available():
     num_episodes = 600
 else:
@@ -187,3 +217,4 @@ for i_episode in range(num_episodes):
             # plot_durations()
             print(f'reset: {i_episode, t}')
             break
+
